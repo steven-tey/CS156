@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Steven Tey</title>
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="https://svgshare.com/i/KJd.svg"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+      body {
+        font-family: Noto Sans;
+      }
+      h1 {
+
+        display: inline-block;
+        font-size: 3em;
+        margin: 0;
+        padding: 14px;
+      }
+      h3 {
+        color: black;
+        font-size: 20px;
+        margin-top: 3px;
+        text-align: center;
+      }
+      #chatbox {
+        margin-left: auto;
+        margin-right: auto;
+        width: 40%;
+        margin-top: 60px;
+        overflow-y: auto;
+      }
+      #userInput {
+        margin-left: auto;
+        margin-right: auto;
+        width: 40%;
+        margin-top: 20px;
+        padding-bottom: 30px;
+      }
+      #textInput {
+        width: 90%;
+        border: none;
+        border-bottom: 3px solid black;
+        font-family: Noto Sans;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-top: 50px;
+        margin-bottom: 30px;
+        font-size: 17px;
+        outline: none;
+      }
+      .userText {
+        color: white;
+        font-family: Noto Sans;
+        font-size: 17px;
+        text-align: right;
+        line-height: 30px;
+        background-color: #0078FF;
+        padding: 15px;
+        padding-left: 20px;
+        padding-right: 20px;
+        border-radius: 10%;
+      }
+      .botText {
+        color: 050505;
+        font-family: Noto Sans;
+        font-size: 17px;
+        text-align: left;
+        line-height: 30px;
+        background-color: #E4E6EB;
+        padding: 15px;
+        padding-left: 20px;
+        padding-right: 20px;
+        border-radius: 10%;
+      }
+      .speech-bubble-user {
+        position: relative;
+        background: #0078FF;
+        border-radius: 30px;
+        margin-bottom: 10px;
+        clear: both;
+        float: right;
+        max-width: 100%;
+      }
+      .speech-bubble-bot {
+        position: relative;
+        background: #E4E6EB;
+        border-radius: 30px;
+        margin-bottom: 10px;
+        clear: both;
+        float: left;
+        max-width: 100%;
+      }
+      #tidbit {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 300px;
+      }
+      .boxed {
+        margin-left: auto;
+        margin-right: auto;
+        width: 78%;
+        margin-top: 60px;
+        margin-bottom: 60px;
+        border: 1px solid #E4E6EB;
+      }
+      .box {
+        border: 2px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <center>
+      <h1>
+        <img
+          src="https://svgshare.com/i/KJd.svg"
+          alt="STEVEN"
+          style="width:40px;height:40px; align:center;"
+        /> Steven Tey
+      </h1>
+    </center>
+  <div class="box"></div>
+    <div class="boxed">
+      <div>
+        <div id="chatbox">
+          <img
+            src="https://svgshare.com/i/KJd.svg"
+            alt="STEVEN"
+            style="width:80px;height:80px;"
+          />
+          <p class="speech-bubble-bot botText">
+            Hi! I'm Steven, Anzhelika's boyfriend. Let's chat!
+          </p>
+        </div>
+        <div id="userInput">
+          <input id="textInput" type="text" name="msg" placeholder="Send Steven a message..." autocomplete="off"/>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script>
+        function getBotResponse() {
+          var rawText = $("#textInput").val();
+          var userHtml = '<p class="speech-bubble-user userText">' + rawText + "</p>";
+          $("#textInput").val("");
+          $("#chatbox").append(userHtml);
+          document
+            .getElementById("userInput")
+            .scrollIntoView({ block: "start", behavior: "smooth" });
+          $.get("/get", { msg: rawText }).done(function(data) {
+            var botHtml = '<p class="speech-bubble-bot botText">' + data + "</p>";
+            $("#chatbox").append(botHtml);
+            document
+              .getElementById("userInput")
+              .scrollIntoView({ block: "start", behavior: "smooth" });
+          });
+        }
+        $("#textInput").keypress(function(e) {
+          if (e.which == 13) {
+            getBotResponse();
+          }
+        });
+  </script>
+</html>
