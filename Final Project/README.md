@@ -1,3 +1,5 @@
+# Introduction
+
 This is the repository for my CS156 Final Project, which consists of 2 main components:
 - The Seq2Seq Model
 - The Chatbot
